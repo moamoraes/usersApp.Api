@@ -22,7 +22,8 @@ namespace UsersApp.Application.Services
             var user = _mapper.Map<User>(userViewModel);
 
             if (user.CPF.IsNullOrEmpty() || user.FullName.IsNullOrEmpty() 
-                    || user.Income <= 0 || user.BirthDate <= DateTime.MinValue)
+                    || user.Income <= 0 || user.BirthDate <= DateTime.MinValue
+                    || user.CPF.Length != 11 || !user.CPF.All(char.IsDigit))
                 return false;
 
             var existentUser = await _userRepository.GetUserByCpfAsync(user.CPF);
